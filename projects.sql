@@ -56,3 +56,25 @@ GROUP BY p.title, p.id;
 -- "Snake Game"	        1	    11
 -- "News Aggregator"    2	    2
 
+
+-- Filtering Using Aggregates
+
+-- How many scores for the News Aggregator project were above the average score?
+SELECT COUNT(grade)
+FROM grades
+WHERE grade >
+    (SELECT AVG(grade) FROM grades 
+    WHERE project_title = 'News Aggregator')
+AND project_title = 'News Aggregator';
+-- Result: count = 1
+
+-- How many scores for the Snake Game were equal to the maximum score?
+SELECT COUNT(grade)
+FROM grades
+WHERE grade =
+    (SELECT MAX(grade) FROM grades WHERE project_title = 'Snake Game')
+AND project_title = 'Snake Game';
+-- Result: count = 4
+
+-- Which projects have at least 5 grades in the grades table?
+
