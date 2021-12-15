@@ -234,3 +234,19 @@ ALTER TABLE ONLY public.students
 -- PostgreSQL database dump complete
 --
 
+
+-- Discussion questions
+
+-- What is the significance of transactions in SQL? When would you want to use a transaction? What is the syntax for executing a transaction?
+
+-- Transactions are sequences of work that is performed for a database. Transactions are important in that they are atomic (meaning all operations are completed successfully), consistent (meaning that the database changes following a successful transaction), isolated (meaning they work independently of other transactions), and durable (meaning that they persist even in system failure). For these reasons, it is appropriate to use transactions when inserting, updating, or deleting multiple rows from a table at once.
+-- The syntax for a tranaction is as such: BEGIN; //insert, update, delete statements here// COMMIT (save changes);
+-- Additional commands include rollback (which rolls back the changes made) and SAVEPOINT (which creates a point to which the user can roll changes back).
+
+
+-- What is the difference between implicit and explicit type conversion in SQL? Give an example of how you can execute explicit type conversion using SQL synax.
+
+-- Implicit conversion is when the database engine (such as PostgreSQL) converts the data type automatically without notifying the user. Explicit conversion is when the user specifies how the data type must be converted. Explicit conversion has better readability, portability, and performance than implicit conversion does, so it is preferred to implicit conversion.
+-- Explicit conversion can be accomplished by casting one data type as another.
+-- For example, in the statement SELECT ROUND (4, 5) AS MyAnswer, 4 is an int that must be converted to a numeric type. This can be done explicitly using the following query: SELECT ROUND(CAST (4 as numeric), 5) AS MyAnswer.
+

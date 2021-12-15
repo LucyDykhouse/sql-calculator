@@ -72,9 +72,45 @@ AND project_title = 'News Aggregator';
 SELECT COUNT(grade)
 FROM grades
 WHERE grade =
-    (SELECT MAX(grade) FROM grades WHERE project_title = 'Snake Game')
+    (SELECT MAX(grade) FROM grades 
+    WHERE project_title = 'Snake Game')
 AND project_title = 'Snake Game';
 -- Result: count = 4
 
 -- Which projects have at least 5 grades in the grades table?
+SELECT project_title
+FROM grades x
+WHERE 5 <= 
+    (SELECT COUNT(project_title) FROM grades y 
+    WHERE x.project_title = y.project_title)
+GROUP BY project_title;
+-- Result: project_title = Snake Game
+
+
+-- Working with Strings
+
+-- You need to generate text for a grade report that will go out to each student. Produce a result set for students who received a grade of 90 or above that says "Congrats STUDENT_NAME, you received a SCORE on PROJECT_NAME". You will need to use string concatenation in SQL for this problem.
+SELECT CONCAT_WS('', 'Congrats ', first_name || ' ' || last_name, ', ', 'you received a ', grade, ' on ', project_title)
+FROM students
+JOIN grades ON student_github = github
+WHERE grade > 90;
+-- Result:
+-- "Congrats Sarah Developer, you received a 100 on Snake Game"
+
+-- Produce a similar report as you did in problem #9, but instead, produce a result set for students who received a score of 70 or less. The report should say "Your assignment needs improvement, you received a SCORE on PROJECT_NAME"
+SELECT CONCAT_WS('', 'Your assignment needs improvement, you received a ', grade, ' on ', project_title)
+FROM students
+JOIN grades ON student_github = github
+WHERE grade < 70;
+-- Result:
+-- "Your assignment needs improvement, you received a 10 on News Aggregator"
+-- "Your assignment needs improvement, you received a 50 on News Aggregator"
+-- "Your assignment needs improvement, you received a 2 on Snake Game"
+
+-- There is another database that categorizes students with a student id which is their firstname-lastname. Note that this id is all lowercase with a dash in between. Produce a result set which is the id for the other database for each student. You will need to lower case the first and last name for each student and concatenate strings together to make the full ID.
+SELECT lower(first_name) || '-' || lower(last_name)
+FROM students;
+-- Result:
+-- "jane-hacker"
+-- "sarah-developer"
 
