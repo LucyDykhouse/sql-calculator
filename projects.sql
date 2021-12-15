@@ -35,3 +35,24 @@ FROM grades;
 -- Joins
 
 -- Produce a result set that shows each grade, the project title, and the student name for that grade. (You will need to JOIN the grades and students table.)
+SELECT grade, project_title, first_name || ' ' || last_name student_name
+FROM grades
+JOIN students ON github = student_github;
+-- Result:
+-- grade    project_title   student_name
+-- 10	"News Aggregator"	"Jane Hacker"
+-- 50	"News Aggregator"	"Sarah Developer"
+-- 2	"Snake Game"	"Jane Hacker"
+-- 100	"Snake Game"	"Sarah Developer"
+
+
+-- Produce a result set that shows each project, project id, and the number of grades that exist for that project. You will need to JOIN the projects and grades table.
+SELECT p.title, p.id, COUNT(g.project_title)
+FROM projects p
+JOIN grades g ON p.title = g.project_title
+GROUP BY p.title, p.id;
+-- Result:
+-- title                id      count
+-- "Snake Game"	        1	    11
+-- "News Aggregator"    2	    2
+
